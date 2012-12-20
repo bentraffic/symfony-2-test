@@ -15,7 +15,22 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
 //    header('HTTP/1.0 403 Forbidden');
 //    exit('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
 }
+/* handle fatal errors - this is probably a hack. */
+register_shutdown_function(function(){
+    $error = error_get_last();
+    if($error !== NULL){
+        $info = "[SHUTDOWN] file:".$error['file']." | ln:".$error['line']." | msg:".$error['message'] ."\n\n";
+        $email_message = $info;
+//        $email_message .= '$_SESSION dump: '."\n".print_r($_SESSION, true)."\n\n";
+        $email_message .= '$_GET dump: '."\n".print_r($_GET, true)."\n\n";
+        $email_message .= '$_POST dump: '."\n".print_r($_POST, true)."\n\n";
+        $email_message .= '$_SERVER dump: '."\n".print_r($_SERVER, true)."\n\n";
 
+        echo( $email_message);
+//        header('location:/error.html');
+        exit;
+    }
+});
 
 $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
 require_once __DIR__.'/../app/AppKernel.php';

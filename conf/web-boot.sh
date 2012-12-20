@@ -17,4 +17,3 @@ echo "Launching apache"
 exec /app/apache/bin/httpd -DNO_DETACH
 exec /app/bin/php www/app/console assets:install /app/www/web/
 exec chmod -R 775 /app/www/web
-
