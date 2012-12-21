@@ -1,5 +1,3 @@
-sed -i 's/Listen 80/Listen '$PORT'/' /app/apache/conf/httpd.conf
-
 #copy over any environment variables that are set by heroku
 for var in `env|cut -f1 -d=`; do
   echo "PassEnv $var" >> /app/apache/conf/httpd.conf;
